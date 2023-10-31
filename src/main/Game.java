@@ -1,5 +1,8 @@
 package main;
 
+import gamestates.MainMenu;
+import gamestates.States;
+
 import java.awt.*;
 
 import static utilz.Constants.GAME_ENGINE;
@@ -9,20 +12,38 @@ public class Game implements Runnable {
     // DEBUGGING OPTIONS
     private boolean isDebugging = true;
 
+    // Window
     private GameFrame gameFrame;
     private GamePanel gamePanel;
 
+    // Views and States
+    private States gameState = States.MENU;
+    private MainMenu mainMenu;
+
     public Game() {
+        loadGameWindow();
+        initializeClasses();
+    }
+
+    private void update() {
+        switch (gameState) {
+            case MENU -> mainMenu.update();
+        }
+    }
+
+    private void loadGameWindow() {
         gamePanel = new GamePanel(this);
         gameFrame = new GameFrame(gamePanel);
     }
 
-    private void update() {
-
+    private void initializeClasses() {
+        mainMenu = new MainMenu();
     }
 
     public void render(Graphics graphics) {
-
+        switch (gameState) {
+            case MENU -> mainMenu.draw(graphics);
+        }
     }
 
     @Override
