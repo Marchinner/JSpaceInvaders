@@ -6,6 +6,9 @@ import static utilz.Constants.GAME_ENGINE;
 
 public class Game implements Runnable {
 
+    // DEBUGGING OPTIONS
+    private boolean isDebugging = true;
+
     private GameFrame gameFrame;
     private GamePanel gamePanel;
 
@@ -57,7 +60,8 @@ public class Game implements Runnable {
 
             if (System.currentTimeMillis() - lastCheck >= 1000) {
                 lastCheck = System.currentTimeMillis();
-//				System.out.println("FPS: " + frames + " | UPS: " + updates);
+                if (isDebugging)
+                    System.out.println("FPS: " + frames + " | UPS: " + updates);
                 frames = 0;
                 updates = 0;
             }
