@@ -2,6 +2,7 @@ package gamestates;
 
 import gui.GButton;
 import gui.GText;
+import main.Game;
 
 import static utilz.Constants.GAME_WINDOW;
 
@@ -9,29 +10,50 @@ import java.awt.*;
 
 public class MainMenu {
 
+    private Game game;
+
     private GButton playButton;
     private GButton quitButton;
 
-    public MainMenu() {
+    public MainMenu(Game game) {
+        this.game = game;
         createButtons();
     }
 
     public void update() {
-
+        updateButtons();
+        if (playButton.isMouseClicking()) {
+            game.play();
+        } else if (quitButton.isMouseClicking()) {
+            game.quit();
+        }
     }
 
     private void createButtons() {
         playButton = new GButton(
                 GAME_WINDOW.HORIZONTAL_CENTERED,
-                150,
+                300,
                 "JOGAR"
         );
 
         quitButton = new GButton(
                 GAME_WINDOW.HORIZONTAL_CENTERED,
-                250,
+                550,
                 "SAIR"
         );
+    }
+
+    private void updateButtons() {
+        playButton.update();
+        quitButton.update();
+    }
+
+    public GButton getPlayButton() {
+        return playButton;
+    }
+
+    public GButton getQuitButton() {
+        return quitButton;
     }
 
     private void drawButtons(Graphics graphics) {

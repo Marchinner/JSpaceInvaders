@@ -1,5 +1,7 @@
 package main;
 
+import controllers.KeyboardInput;
+import controllers.MouseInput;
 import gamestates.MainMenu;
 import gamestates.States;
 
@@ -20,9 +22,14 @@ public class Game implements Runnable {
     private States gameState = States.MENU;
     private MainMenu mainMenu;
 
+    // Input Controllers
+    public KeyboardInput keyboardInput;
+    public MouseInput mouseInput;
+
     public Game() {
         loadGameWindow();
         initializeClasses();
+        startGameThread();
     }
 
     private void update() {
@@ -31,13 +38,46 @@ public class Game implements Runnable {
         }
     }
 
+    /***
+     * Loads the game window and the input controllers
+     */
     private void loadGameWindow() {
+        keyboardInput = new KeyboardInput();
+        mouseInput = new MouseInput(this);
         gamePanel = new GamePanel(this);
         gameFrame = new GameFrame(gamePanel);
+        gamePanel.addKeyListener(keyboardInput);
+        gamePanel.addMouseListener(mouseInput);
+        gamePanel.addMouseMotionListener(mouseInput);
     }
 
     private void initializeClasses() {
-        mainMenu = new MainMenu();
+        mainMenu = new MainMenu(this);
+    }
+
+    public States getGameState() {
+        return gameState;
+    }
+
+    public MainMenu getMainMenu() {
+        return mainMenu;
+    }
+
+    public void play() {
+        gameState = States.PLAYING;
+    }
+
+    public void pause() {
+        gameState = States.PAUSED;
+    }
+
+    public void quit() {
+        System.exit(0);
+    }
+
+    private void startGameThread() {
+        Thread gameThread = new Thread(this);
+        gameThread.start();
     }
 
     public void render(Graphics graphics) {
