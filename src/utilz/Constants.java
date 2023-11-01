@@ -13,5 +13,6 @@ public class Constants {
         public static final int WIDTH = 800;
         public static final int HEIGHT = 600;
         public static final Dimension DIMENSION = new Dimension(WIDTH, HEIGHT);
+        public static final int HORIZONTAL_CENTERED = WIDTH / 2;
     }
 }
