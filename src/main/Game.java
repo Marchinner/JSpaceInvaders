@@ -3,6 +3,7 @@ package main;
 import controllers.KeyboardInput;
 import controllers.MouseInput;
 import gamestates.MainMenu;
+import gamestates.Playing;
 import gamestates.States;
 
 import java.awt.*;
@@ -21,6 +22,7 @@ public class Game implements Runnable {
     // Views and States
     private States gameState = States.MENU;
     private MainMenu mainMenu;
+    private Playing playing;
 
     // Input Controllers
     public KeyboardInput keyboardInput;
@@ -35,6 +37,7 @@ public class Game implements Runnable {
     private void update() {
         switch (gameState) {
             case MENU -> mainMenu.update();
+            case PLAYING -> playing.update();
         }
     }
 
@@ -53,6 +56,7 @@ public class Game implements Runnable {
 
     private void initializeClasses() {
         mainMenu = new MainMenu(this);
+        playing = new Playing(this);
     }
 
     public States getGameState() {
@@ -83,6 +87,7 @@ public class Game implements Runnable {
     public void render(Graphics graphics) {
         switch (gameState) {
             case MENU -> mainMenu.draw(graphics);
+            case PLAYING -> playing.draw(graphics);
         }
     }
 
