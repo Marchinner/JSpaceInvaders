@@ -5,10 +5,13 @@ import controllers.KeyboardInput;
 import java.awt.*;
 
 public class Entity {
-    private int x;
-    private int y;
-    private KeyboardInput keyboardInput;
-    private Rectangle hitbox;
+    protected int x;
+    protected int y;
+    protected KeyboardInput keyboardInput;
+    protected Rectangle hitbox;
+    protected Ship ship;
+    protected boolean isAlive = true;
+    protected int speed = 5;
 
     public Entity(int x, int y, KeyboardInput keyboardInput) {
         this.x = x;

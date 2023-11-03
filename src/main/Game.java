@@ -15,6 +15,9 @@ public class Game implements Runnable {
     // DEBUGGING OPTIONS
     private boolean isDebugging = true;
 
+    // DeltaTime
+    private double deltaTime;
+
     // Window
     private GameFrame gameFrame;
     private GamePanel gamePanel;
@@ -25,8 +28,8 @@ public class Game implements Runnable {
     private Playing playing;
 
     // Input Controllers
-    public KeyboardInput keyboardInput;
-    public MouseInput mouseInput;
+    private KeyboardInput keyboardInput;
+    private MouseInput mouseInput;
 
     public Game() {
         loadGameWindow();
@@ -67,6 +70,14 @@ public class Game implements Runnable {
         return mainMenu;
     }
 
+    public KeyboardInput getKeyboardInput() {
+        return keyboardInput;
+    }
+
+    public MouseInput getMouseInput() {
+        return mouseInput;
+    }
+
     public void play() {
         gameState = States.PLAYING;
     }
@@ -82,6 +93,10 @@ public class Game implements Runnable {
     private void startGameThread() {
         Thread gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    public double getDeltaTime() {
+        return deltaTime;
     }
 
     public void render(Graphics graphics) {
@@ -111,6 +126,7 @@ public class Game implements Runnable {
             deltaU += (currentTime - previousTime) / timePerUpdate;
             deltaF += (currentTime - previousTime) / timePerFrame;
             previousTime = currentTime;
+            deltaTime = deltaF;
 
             if (deltaU >= 1) {
                 update();
