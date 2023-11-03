@@ -3,6 +3,7 @@ package main;
 import controllers.KeyboardInput;
 import controllers.MouseInput;
 import gamestates.MainMenu;
+import gamestates.Paused;
 import gamestates.Playing;
 import gamestates.States;
 
@@ -26,6 +27,7 @@ public class Game implements Runnable {
     private States gameState = States.MENU;
     private MainMenu mainMenu;
     private Playing playing;
+    private Paused paused;
 
     // Input Controllers
     private KeyboardInput keyboardInput;
@@ -41,6 +43,7 @@ public class Game implements Runnable {
         switch (gameState) {
             case MENU -> mainMenu.update();
             case PLAYING -> playing.update();
+            case PAUSED -> paused.update();
         }
     }
 
@@ -60,6 +63,7 @@ public class Game implements Runnable {
     private void initializeClasses() {
         mainMenu = new MainMenu(this);
         playing = new Playing(this);
+        paused = new Paused(this);
     }
 
     public States getGameState() {
@@ -68,6 +72,10 @@ public class Game implements Runnable {
 
     public MainMenu getMainMenu() {
         return mainMenu;
+    }
+
+    public Paused getPaused() {
+        return paused;
     }
 
     public KeyboardInput getKeyboardInput() {
@@ -82,8 +90,17 @@ public class Game implements Runnable {
         gameState = States.PLAYING;
     }
 
+    public void restart() {
+        playing.initializeClasses();
+        play();
+    }
+
     public void pause() {
         gameState = States.PAUSED;
+    }
+
+    public void toMainMenu() {
+        gameState = States.MENU;
     }
 
     public void quit() {
@@ -103,6 +120,7 @@ public class Game implements Runnable {
         switch (gameState) {
             case MENU -> mainMenu.draw(graphics);
             case PLAYING -> playing.draw(graphics);
+            case PAUSED -> paused.draw(graphics);
         }
     }
 

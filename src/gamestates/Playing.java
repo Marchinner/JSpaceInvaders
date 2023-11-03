@@ -7,6 +7,7 @@ import utilz.Constants.GAME_WINDOW;
 import utilz.Constants.GAME;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class Playing {
 
@@ -30,6 +31,10 @@ public class Playing {
 
     public void update() {
         player.update();
+
+        if (keyboardInput.getKeyPressed(KeyEvent.VK_ESCAPE)) {
+            game.pause();
+        }
     }
 
     public void draw(Graphics graphics) {
