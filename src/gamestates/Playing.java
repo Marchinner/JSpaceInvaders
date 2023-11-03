@@ -1,18 +1,22 @@
 package gamestates;
 
 import controllers.KeyboardInput;
+import entities.Alien;
 import entities.Player;
 import main.Game;
+import main.Main;
 import utilz.Constants.GAME_WINDOW;
 import utilz.Constants.GAME;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class Playing {
 
     private Game game;
     private Player player;
+    private ArrayList<Alien> aliens = new ArrayList<>();
     private KeyboardInput keyboardInput;
 
     public Playing(Game game) {
@@ -27,10 +31,14 @@ public class Playing {
 
     public void initializeClasses() {
         player = new Player(GAME_WINDOW.HORIZONTAL_CENTERED, 550, keyboardInput);
+        aliens.add(new Alien((int) (Math.random() * GAME_WINDOW.WIDTH), -40, keyboardInput));
     }
 
     public void update() {
         player.update();
+        for (Alien alien : aliens) {
+            alien.update();
+        }
 
         if (keyboardInput.getKeyPressed(KeyEvent.VK_ESCAPE)) {
             game.pause();
@@ -40,6 +48,10 @@ public class Playing {
     public void draw(Graphics graphics) {
         drawBackground(graphics);
         player.draw(graphics);
+
+        for (Alien alien : aliens) {
+            alien.draw(graphics);
+        }
     }
 
     private void drawBackground(Graphics graphics) {
