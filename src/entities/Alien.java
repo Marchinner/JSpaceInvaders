@@ -1,6 +1,7 @@
 package entities;
 
 import controllers.KeyboardInput;
+import main.Game;
 import utilz.Constants;
 
 import javax.imageio.ImageIO;
@@ -12,9 +13,11 @@ import java.io.InputStream;
 public class Alien extends Entity {
 
     private BufferedImage alienImage = null;
+    private Game game;
 
-    public Alien(int x, int y, KeyboardInput keyboardInput) {
-        super(x, y, keyboardInput);
+    public Alien(int x, int y, KeyboardInput keyboardInput, Game game) {
+        super(x, y, game, keyboardInput);
+        this.game = game;
         ship = Ship.ALIEN_SHIP;
 
         try (InputStream inputStream = Player.class.getResourceAsStream(Constants.SPRITE_ATLAS.ALIEN_SHIP)) {
@@ -23,9 +26,7 @@ public class Alien extends Entity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        hitbox.width = alienImage.getWidth();
-        hitbox.height = alienImage.getHeight();
+        hitbox = new Rectangle(x, y, alienImage.getWidth(), alienImage.getHeight());
     }
 
     public void update() {
@@ -43,6 +44,12 @@ public class Alien extends Entity {
 
     public void draw(Graphics graphics) {
         drawAlien(graphics);
+        drawHitbox(graphics);
+    }
+
+    private void drawHitbox(Graphics graphics) {
+        graphics.setColor(Color.RED);
+        graphics.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
     }
 
     private void drawAlien(Graphics graphics) {

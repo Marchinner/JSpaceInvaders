@@ -1,30 +1,46 @@
 package entities;
 
+import main.Game;
+
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class Missile {
-    private float x;
-    private float y;
+    private int x;
+    private int y;
     private Entity shooter;
-    private float speed = 2.5f;
-    private Rectangle2D hitbox;
+    private int speed = 1;
+    private Rectangle hitbox;
 
     public Missile(Entity shooter) {
         this.shooter = shooter;
-        x = (float) shooter.hitbox.x + (float) shooter.hitbox.width / 2;
-        y = (float) shooter.hitbox.y;
-        hitbox = new Rectangle2D.Float(x, y, 2f, 2f);
+        x = shooter.hitbox.x + shooter.hitbox.width / 2;
+        y = shooter.hitbox.y;
+        hitbox = new Rectangle(x, y, 2, 8);
     }
 
     public void update() {
+        hitbox.x = x;
+        hitbox.y = y;
         y -= speed;
-        hitbox.setRect(x, y, 2f, 2f);
+    }
+
+    public Entity getShooter() {
+        return shooter;
+    }
+
+    public Rectangle getHitbox() {
+        return hitbox;
     }
 
     public void draw(Graphics graphics) {
-        Graphics2D graphics2D = (Graphics2D) graphics;
-        graphics2D.setColor(Color.RED);
-        graphics2D.draw(hitbox);
+        graphics.setColor(Color.RED);
+        graphics.fillRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+        drawHitbox(graphics);
+    }
+
+    private void drawHitbox(Graphics graphics) {
+        graphics.setColor(Color.WHITE);
+        graphics.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
     }
 }

@@ -14,12 +14,13 @@ import java.io.InputStream;
 public class Player extends Entity {
 
     private BufferedImage playerImage = null;
-    private Game game;
+    private boolean reloading = false;
+    private long actionTime = 0L;
+    private long reloadingCooldownTime = 1000; // 3 seconds
 
-    public Player(int x, int y,Game game, KeyboardInput keyboardInput) {
-        super(x, y, keyboardInput);
+    public Player(int x, int y, Game game, KeyboardInput keyboardInput) {
+        super(x, y, game, keyboardInput);
         ship = Ship.PLAYER_SHIP;
-        this.game = game;
 
         try (InputStream inputStream = Player.class.getResourceAsStream(Constants.SPRITE_ATLAS.PLAYER_SHIP)) {
             assert inputStream != null;
@@ -27,9 +28,7 @@ public class Player extends Entity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        hitbox.width = playerImage.getWidth();
-        hitbox.height = playerImage.getHeight();
+        hitbox = new Rectangle(x, y, playerImage.getWidth(), playerImage.getHeight());
     }
 
     public void update() {
@@ -55,7 +54,16 @@ public class Player extends Entity {
     }
 
     private void shoot() {
-        game.getPlaying().getMissiles().add(new Missile(this));
+        long currentActionTime = System.currentTimeMillis();
+        if (currentActionTime - actionTime >= reloadingCooldownTime) {
+            actionTime = currentActionTime;
+            reloading = false;
+        }
+
+        if (!reloading) {
+            game.getPlaying().getMissiles().add(new Missile(this));
+            reloading = true;
+        }
     }
 
     private boolean canMoveRight() {

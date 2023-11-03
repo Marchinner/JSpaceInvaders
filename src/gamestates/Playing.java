@@ -5,7 +5,6 @@ import entities.Alien;
 import entities.Missile;
 import entities.Player;
 import main.Game;
-import main.Main;
 import utilz.Constants.GAME_WINDOW;
 import utilz.Constants.GAME;
 
@@ -33,13 +32,15 @@ public class Playing {
 
     public void initializeClasses() {
         player = new Player(GAME_WINDOW.HORIZONTAL_CENTERED, 550, game, keyboardInput);
-        aliens.add(new Alien((int) (Math.random() * GAME_WINDOW.WIDTH), -40, keyboardInput));
+        aliens.add(new Alien((int) (Math.random() * GAME_WINDOW.WIDTH), -40, keyboardInput, game));
     }
 
     public void update() {
         player.update();
+        player.checkIfWasHit(missiles);
         for (Alien alien : aliens) {
             alien.update();
+            alien.checkIfWasHit(missiles);
         }
 
         if (keyboardInput.getKeyPressed(KeyEvent.VK_ESCAPE)) {
