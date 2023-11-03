@@ -2,6 +2,7 @@ package gamestates;
 
 import controllers.KeyboardInput;
 import entities.Alien;
+import entities.Missile;
 import entities.Player;
 import main.Game;
 import main.Main;
@@ -17,6 +18,7 @@ public class Playing {
     private Game game;
     private Player player;
     private ArrayList<Alien> aliens = new ArrayList<>();
+    private ArrayList<Missile> missiles = new ArrayList<>();
     private KeyboardInput keyboardInput;
 
     public Playing(Game game) {
@@ -30,7 +32,7 @@ public class Playing {
     }
 
     public void initializeClasses() {
-        player = new Player(GAME_WINDOW.HORIZONTAL_CENTERED, 550, keyboardInput);
+        player = new Player(GAME_WINDOW.HORIZONTAL_CENTERED, 550, game, keyboardInput);
         aliens.add(new Alien((int) (Math.random() * GAME_WINDOW.WIDTH), -40, keyboardInput));
     }
 
@@ -43,6 +45,12 @@ public class Playing {
         if (keyboardInput.getKeyPressed(KeyEvent.VK_ESCAPE)) {
             game.pause();
         }
+
+        if (!missiles.isEmpty()) {
+            for (Missile missile : missiles) {
+                missile.update();
+            }
+        }
     }
 
     public void draw(Graphics graphics) {
@@ -52,10 +60,20 @@ public class Playing {
         for (Alien alien : aliens) {
             alien.draw(graphics);
         }
+
+        if (!missiles.isEmpty()) {
+            for (Missile missile : missiles) {
+                missile.draw(graphics);
+            }
+        }
     }
 
     private void drawBackground(Graphics graphics) {
         graphics.setColor(GAME.BACKGROUND_COLOR);
         graphics.fillRect(0, 0, GAME_WINDOW.WIDTH, GAME_WINDOW.HEIGHT);
+    }
+
+    public ArrayList<Missile> getMissiles() {
+        return missiles;
     }
 }

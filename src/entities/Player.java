@@ -1,6 +1,7 @@
 package entities;
 
 import controllers.KeyboardInput;
+import main.Game;
 import utilz.Constants;
 
 import javax.imageio.ImageIO;
@@ -13,10 +14,12 @@ import java.io.InputStream;
 public class Player extends Entity {
 
     private BufferedImage playerImage = null;
+    private Game game;
 
-    public Player(int x, int y, KeyboardInput keyboardInput) {
+    public Player(int x, int y,Game game, KeyboardInput keyboardInput) {
         super(x, y, keyboardInput);
         ship = Ship.PLAYER_SHIP;
+        this.game = game;
 
         try (InputStream inputStream = Player.class.getResourceAsStream(Constants.SPRITE_ATLAS.PLAYER_SHIP)) {
             assert inputStream != null;
@@ -32,6 +35,9 @@ public class Player extends Entity {
     public void update() {
         if (isAlive) {
             updatePosition();
+            if (keyboardInput.getKeyPressed(KeyEvent.VK_SPACE)) {
+                shoot();
+            }
         }
     }
 
@@ -48,6 +54,9 @@ public class Player extends Entity {
         }
     }
 
+    private void shoot() {
+        game.getPlaying().getMissiles().add(new Missile(this));
+    }
 
     private boolean canMoveRight() {
         return hitbox.x + speed + hitbox.width <= Constants.GAME_WINDOW.WIDTH;

@@ -74,6 +74,10 @@ public class Game implements Runnable {
         return mainMenu;
     }
 
+    public Playing getPlaying() {
+        return playing;
+    }
+
     public Paused getPaused() {
         return paused;
     }
