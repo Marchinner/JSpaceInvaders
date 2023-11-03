@@ -21,4 +21,7 @@ public class Constants {
         public static final int HORIZONTAL_CENTERED = WIDTH / 2;
     }
 
+    public static final class SPRITE_ATLAS {
+        public static final String PLAYER_SHIP = "/player_ship.png";
+    }
 }

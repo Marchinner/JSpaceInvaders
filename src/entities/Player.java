@@ -3,16 +3,30 @@ package entities;
 import controllers.KeyboardInput;
 import utilz.Constants;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Player extends Entity {
+
+    private BufferedImage playerImage = null;
 
     public Player(int x, int y, KeyboardInput keyboardInput) {
         super(x, y, keyboardInput);
         ship = Ship.PLAYER_SHIP;
-        hitbox.width = 15;
-        hitbox.height = 15;
+
+        try (InputStream inputStream = Player.class.getResourceAsStream(Constants.SPRITE_ATLAS.PLAYER_SHIP)) {
+            assert inputStream != null;
+            playerImage = ImageIO.read(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        hitbox.width = playerImage.getWidth();
+        hitbox.height = playerImage.getHeight();
     }
 
     public void update() {
@@ -53,7 +67,7 @@ public class Player extends Entity {
 
     public void draw(Graphics graphics) {
         drawPlayer(graphics);
-        drawHitbox(graphics);
+//        drawHitbox(graphics);
     }
 
     private void drawHitbox(Graphics graphics) {
@@ -62,7 +76,6 @@ public class Player extends Entity {
     }
 
     private void drawPlayer(Graphics graphics) {
-        graphics.setColor(Color.WHITE);
-        graphics.fillRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+        graphics.drawImage(playerImage, hitbox.x, hitbox.y, null);
     }
 }
