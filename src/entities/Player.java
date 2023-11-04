@@ -14,9 +14,6 @@ import java.io.InputStream;
 public class Player extends Entity {
 
     private BufferedImage playerImage = null;
-    private boolean reloading = false;
-    private long actionTime = 0L;
-    private long reloadingCooldownTime = 1000; // 3 seconds
 
     public Player(int x, int y, Game game, KeyboardInput keyboardInput) {
         super(x, y, game, keyboardInput);

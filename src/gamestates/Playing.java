@@ -11,6 +11,7 @@ import utilz.Constants.GAME;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Playing {
 
@@ -19,6 +20,12 @@ public class Playing {
     private ArrayList<Alien> aliens = new ArrayList<>();
     private ArrayList<Missile> missiles = new ArrayList<>();
     private KeyboardInput keyboardInput;
+    private long timeToRespawnAliens = 1500;    // 3 seconds
+    private long respawnCounter = 0L;
+    private boolean canCreateAlien = true;
+    private long currentRespawnTime = System.currentTimeMillis();
+
+    private int deathAliens = 0;
 
     public Playing(Game game) {
         this.game = game;
@@ -32,6 +39,9 @@ public class Playing {
 
     public void initializeClasses() {
         player = new Player(GAME_WINDOW.HORIZONTAL_CENTERED, 550, game, keyboardInput);
+    }
+
+    private void createAlien() {
         aliens.add(new Alien((int) (Math.random() * GAME_WINDOW.WIDTH), -40, keyboardInput, game));
     }
 
@@ -41,7 +51,12 @@ public class Playing {
         for (Alien alien : aliens) {
             alien.update();
             alien.checkIfWasHit(missiles);
+            if (!alien.isAlive()) {
+                deathAliens++;
+            }
         }
+
+        aliens.removeIf(alien -> alien.getHitbox().y >= GAME_WINDOW.HEIGHT);
 
         if (keyboardInput.getKeyPressed(KeyEvent.VK_ESCAPE)) {
             game.pause();
@@ -51,6 +66,17 @@ public class Playing {
             for (Missile missile : missiles) {
                 missile.update();
             }
+        }
+
+        if (canCreateAlien) {
+            createAlien();
+            canCreateAlien = false;
+        }
+
+            currentRespawnTime = System.currentTimeMillis();
+        if (currentRespawnTime - respawnCounter >= timeToRespawnAliens) {
+            respawnCounter = currentRespawnTime;
+            canCreateAlien = true;
         }
     }
 

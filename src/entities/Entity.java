@@ -43,6 +43,10 @@ public class Entity {
         }
     }
 
+    public Rectangle getHitbox() {
+        return hitbox;
+    }
+
     public void checkIfWasHit(ArrayList<Missile> missiles) {
         if (!missiles.isEmpty()) {
             for (Missile missile : missiles) {
