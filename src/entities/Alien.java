@@ -32,7 +32,14 @@ public class Alien extends Entity {
     public void update() {
         if (isAlive) {
             updatePosition();
+            if (isOnLineOfAttack(game.getPlaying().getPlayer()))
+                shoot();
         }
+    }
+
+    private boolean isOnLineOfAttack(Player player) {
+        return hitbox.x + hitbox.width / 2 >= player.hitbox.x &&
+                hitbox.x + hitbox.width / 2 <= player.hitbox.x + player.hitbox.width;
     }
 
     private void updatePosition() {

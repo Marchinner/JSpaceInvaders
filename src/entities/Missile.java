@@ -6,14 +6,19 @@ public class Missile {
     private int x;
     private int y;
     private Entity shooter;
-    private int speed = 1;
+    private int speed = 2;
     private Rectangle hitbox;
     private boolean hitTarget = false;
 
     public Missile(Entity shooter) {
         this.shooter = shooter;
         x = shooter.hitbox.x + shooter.hitbox.width / 2;
-        y = shooter.hitbox.y;
+
+        switch (shooter.ship) {
+            case PLAYER_SHIP -> y = shooter.hitbox.y;
+            case ALIEN_SHIP -> y = shooter.hitbox.y + shooter.hitbox.height;
+        }
+
         hitbox = new Rectangle(x, y, 2, 8);
     }
 
@@ -21,7 +26,10 @@ public class Missile {
         if (!hitTarget) {
             hitbox.x = x;
             hitbox.y = y;
-            y -= speed;
+            switch (shooter.ship) {
+                case ALIEN_SHIP -> y += speed;
+                case PLAYER_SHIP -> y -= speed;
+            }
         }
     }
 

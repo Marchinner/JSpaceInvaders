@@ -74,6 +74,10 @@ public class Playing {
         graphics.fillRect(0, 0, GAME_WINDOW.WIDTH, GAME_WINDOW.HEIGHT);
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
     public ArrayList<Missile> getMissiles() {
         return missiles;
     }

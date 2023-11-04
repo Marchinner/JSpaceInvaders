@@ -15,6 +15,9 @@ public class Entity {
     protected boolean isAlive = true;
     protected int speed = 5;
     protected Game game;
+    protected boolean reloading = false;
+    protected long actionTime = 0L;
+    protected long reloadingCooldownTime = 1000;
 
     public boolean isAlive() {
         return isAlive;
@@ -25,6 +28,19 @@ public class Entity {
         this.y = y;
         this.game = game;
         this.keyboardInput = keyboardInput;
+    }
+
+    protected void shoot() {
+        long currentActionTime = System.currentTimeMillis();
+        if (currentActionTime - actionTime >= reloadingCooldownTime) {
+            actionTime = currentActionTime;
+            reloading = false;
+        }
+
+        if (!reloading) {
+            game.getPlaying().getMissiles().add(new Missile(this));
+            reloading = true;
+        }
     }
 
     public void checkIfWasHit(ArrayList<Missile> missiles) {

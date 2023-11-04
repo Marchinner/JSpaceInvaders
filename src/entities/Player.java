@@ -53,19 +53,6 @@ public class Player extends Entity {
         }
     }
 
-    private void shoot() {
-        long currentActionTime = System.currentTimeMillis();
-        if (currentActionTime - actionTime >= reloadingCooldownTime) {
-            actionTime = currentActionTime;
-            reloading = false;
-        }
-
-        if (!reloading) {
-            game.getPlaying().getMissiles().add(new Missile(this));
-            reloading = true;
-        }
-    }
-
     private boolean canMoveRight() {
         return hitbox.x + speed + hitbox.width <= Constants.GAME_WINDOW.WIDTH;
     }
