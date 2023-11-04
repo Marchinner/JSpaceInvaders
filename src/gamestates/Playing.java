@@ -39,6 +39,13 @@ public class Playing {
 
     public void initializeClasses() {
         player = new Player(GAME_WINDOW.HORIZONTAL_CENTERED, 550, game, keyboardInput);
+
+        if (!aliens.isEmpty()) {
+            aliens.clear();
+        }
+        if (!missiles.isEmpty()) {
+            missiles.clear();
+        }
     }
 
     private void createAlien() {
@@ -56,7 +63,6 @@ public class Playing {
             }
         }
 
-        aliens.removeIf(alien -> alien.getHitbox().y >= GAME_WINDOW.HEIGHT);
 
         if (keyboardInput.getKeyPressed(KeyEvent.VK_ESCAPE)) {
             game.pause();
@@ -78,6 +84,9 @@ public class Playing {
             respawnCounter = currentRespawnTime;
             canCreateAlien = true;
         }
+
+        aliens.removeIf(alien -> alien.getHitbox().y >= GAME_WINDOW.HEIGHT);
+        missiles.removeIf(Missile::hasHitTarget);
     }
 
     public void draw(Graphics graphics) {

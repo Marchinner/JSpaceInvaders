@@ -42,11 +42,9 @@ public class Missile {
     }
 
     public void draw(Graphics graphics) {
-        if (!hitTarget) {
             graphics.setColor(Color.RED);
             graphics.fillRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 //            drawHitbox(graphics);
-        }
     }
 
     private void drawHitbox(Graphics graphics) {
