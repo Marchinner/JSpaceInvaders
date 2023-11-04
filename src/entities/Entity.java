@@ -16,6 +16,10 @@ public class Entity {
     protected int speed = 5;
     protected Game game;
 
+    public boolean isAlive() {
+        return isAlive;
+    }
+
     public Entity(int x, int y, Game game, KeyboardInput keyboardInput) {
         this.x = x;
         this.y = y;
@@ -26,11 +30,12 @@ public class Entity {
     public void checkIfWasHit(ArrayList<Missile> missiles) {
         if (!missiles.isEmpty()) {
             for (Missile missile : missiles) {
-                if (missile.getHitbox().contains(hitbox)) {
-                    System.out.println("HIT!");
-                    isAlive = false;
+                if (missile.getShooter().ship != ship) {
+                    if (missile.getHitbox().intersects(hitbox)) {
+                        missile.setHitTarget(true);
+                        isAlive = false;
+                    }
                 }
-
             }
         }
     }

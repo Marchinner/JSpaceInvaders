@@ -43,8 +43,10 @@ public class Alien extends Entity {
     }
 
     public void draw(Graphics graphics) {
-        drawAlien(graphics);
-        drawHitbox(graphics);
+        if (isAlive) {
+            drawAlien(graphics);
+//            drawHitbox(graphics);
+        }
     }
 
     private void drawHitbox(Graphics graphics) {
