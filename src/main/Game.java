@@ -8,6 +8,7 @@ import gamestates.Playing;
 import gamestates.States;
 
 import java.awt.*;
+import java.io.IOException;
 
 import static utilz.Constants.GAME_ENGINE;
 
@@ -34,8 +35,8 @@ public class Game implements Runnable {
     private MouseInput mouseInput;
 
     public Game() {
-        loadGameWindow();
         initializeClasses();
+        loadGameWindow();
         startGameThread();
     }
 
@@ -51,8 +52,6 @@ public class Game implements Runnable {
      * Loads the game window and the input controllers
      */
     private void loadGameWindow() {
-        keyboardInput = new KeyboardInput();
-        mouseInput = new MouseInput(this);
         gamePanel = new GamePanel(this);
         gameFrame = new GameFrame(gamePanel);
         gamePanel.addKeyListener(keyboardInput);
@@ -61,6 +60,8 @@ public class Game implements Runnable {
     }
 
     private void initializeClasses() {
+        mouseInput = new MouseInput(this);
+        keyboardInput = new KeyboardInput();
         mainMenu = new MainMenu(this);
         playing = new Playing(this);
         paused = new Paused(this);
@@ -120,7 +121,7 @@ public class Game implements Runnable {
         return deltaTime;
     }
 
-    public void render(Graphics graphics) {
+    public void render(Graphics graphics) throws IOException, FontFormatException {
         switch (gameState) {
             case MENU -> mainMenu.draw(graphics);
             case PLAYING -> playing.draw(graphics);

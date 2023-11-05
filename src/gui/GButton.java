@@ -3,6 +3,12 @@ package gui;
 import controllers.MouseInput;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.FileSystem;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class GButton {
 
@@ -18,6 +24,8 @@ public class GButton {
     private FontMetrics fontMetrics;
     private int textWidth;
     private int textHeight;
+
+    private Path fontPath = Paths.get("res/dpcomic.ttf");
 
     // Buttons controllers
     private boolean isMouseInside = false;
@@ -62,12 +70,14 @@ public class GButton {
         return hitbox;
     }
 
-    public void draw(Graphics graphics) {
+    public void draw(Graphics graphics) throws IOException, FontFormatException {
+        font = Font.createFont(Font.TRUETYPE_FONT, new File(String.valueOf(fontPath))).deriveFont(42f);
+
         // Get the metrics and positions
-        font = new Font(Font.DIALOG, Font.BOLD, 32);
+//        font = new Font(Font.DIALOG, Font.BOLD, 32);
         fontMetrics = graphics.getFontMetrics(font);
         textWidth = fontMetrics.stringWidth(BUTTON_TEXT);
-        textHeight = fontMetrics.getHeight();
+        textHeight = fontMetrics.getAscent() - fontMetrics.getLeading() + fontMetrics.getDescent();
         hitbox.x = X - PADDING - (textWidth / 2);
         hitbox.y = Y - PADDING - (textHeight / 2);
         hitbox.width = textWidth + (PADDING * 2);
@@ -75,12 +85,13 @@ public class GButton {
 
         // Draw the button box
         graphics.setColor(buttonColor);
-        graphics.fillRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+        if (isMouseInside)
+            graphics.fillRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 
         // Draw the button text
         graphics.setColor(textColor);
         graphics.setFont(font);
-        graphics.drawString(BUTTON_TEXT, hitbox.x + PADDING, hitbox.y + textHeight - fontMetrics.getDescent());
+        graphics.drawString(BUTTON_TEXT, hitbox.x + PADDING, hitbox.y + textHeight);
 
         // DEBUG: Draw button box
 //        drawButtonHitbox(graphics);
