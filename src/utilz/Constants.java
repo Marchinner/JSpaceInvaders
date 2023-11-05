@@ -26,4 +26,10 @@ public class Constants {
         public static final String PLAYER_SHIP = "/player_ship.png";
         public static final String ALIEN_SHIP = "/alien_ship.png";
     }
+
+    public static final class ENTITIES {
+        public static final float PLAYER_SPEED = 3f;
+        public static final float ALIEN_SPEED = 0.25f;
+        public static final float MISSILE_SPEED = ALIEN_SPEED + 1f;
+    }
 }

@@ -2,10 +2,7 @@ package main;
 
 import controllers.KeyboardInput;
 import controllers.MouseInput;
-import gamestates.MainMenu;
-import gamestates.Paused;
-import gamestates.Playing;
-import gamestates.States;
+import gamestates.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -29,6 +26,7 @@ public class Game implements Runnable {
     private MainMenu mainMenu;
     private Playing playing;
     private Paused paused;
+    private GameOver gameOver;
 
     // Input Controllers
     private KeyboardInput keyboardInput;
@@ -45,6 +43,7 @@ public class Game implements Runnable {
             case MENU -> mainMenu.update();
             case PLAYING -> playing.update();
             case PAUSED -> paused.update();
+            case GAME_OVER -> gameOver.update();
         }
     }
 
@@ -65,6 +64,7 @@ public class Game implements Runnable {
         mainMenu = new MainMenu(this);
         playing = new Playing(this);
         paused = new Paused(this);
+        gameOver = new GameOver(this);
     }
 
     public States getGameState() {
@@ -83,6 +83,10 @@ public class Game implements Runnable {
         return paused;
     }
 
+    public GameOver getGameOver() {
+        return gameOver;
+    }
+
     public KeyboardInput getKeyboardInput() {
         return keyboardInput;
     }
@@ -92,6 +96,7 @@ public class Game implements Runnable {
     }
 
     public void play() {
+        playing.initializeClasses();
         gameState = States.PLAYING;
     }
 
@@ -102,6 +107,10 @@ public class Game implements Runnable {
 
     public void pause() {
         gameState = States.PAUSED;
+    }
+
+    public void gameOver() {
+        gameState = States.GAME_OVER;
     }
 
     public void toMainMenu() {
@@ -126,6 +135,7 @@ public class Game implements Runnable {
             case MENU -> mainMenu.draw(graphics);
             case PLAYING -> playing.draw(graphics);
             case PAUSED -> paused.draw(graphics);
+            case GAME_OVER -> gameOver.draw(graphics);
         }
     }
 

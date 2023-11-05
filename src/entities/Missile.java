@@ -1,13 +1,16 @@
 package entities;
 
+import static utilz.Constants.ENTITIES.MISSILE_SPEED;
+
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class Missile {
-    private int x;
-    private int y;
+    private float x;
+    private float y;
     private Entity shooter;
-    private int speed = 2;
-    private Rectangle hitbox;
+    private float speed = MISSILE_SPEED;
+    private Rectangle2D.Float hitbox;
     private boolean hitTarget = false;
 
     public Missile(Entity shooter) {
@@ -19,7 +22,7 @@ public class Missile {
             case ALIEN_SHIP -> y = shooter.hitbox.y + shooter.hitbox.height;
         }
 
-        hitbox = new Rectangle(x, y, 2, 8);
+        hitbox = new Rectangle2D.Float(x, y, 2f, 8f);
     }
 
     public void update() {
@@ -37,19 +40,19 @@ public class Missile {
         return shooter;
     }
 
-    public Rectangle getHitbox() {
+    public Rectangle2D.Float getHitbox() {
         return hitbox;
     }
 
     public void draw(Graphics graphics) {
             graphics.setColor(Color.RED);
-            graphics.fillRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+            graphics.fillRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
 //            drawHitbox(graphics);
     }
 
     private void drawHitbox(Graphics graphics) {
         graphics.setColor(Color.WHITE);
-        graphics.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+//        graphics.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
     }
 
     public boolean hasHitTarget() {

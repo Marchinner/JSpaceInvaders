@@ -7,6 +7,7 @@ import utilz.Constants;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +19,7 @@ public class Player extends Entity {
     public Player(int x, int y, Game game, KeyboardInput keyboardInput) {
         super(x, y, game, keyboardInput);
         ship = Ship.PLAYER_SHIP;
+        speed = Constants.ENTITIES.PLAYER_SPEED;
 
         try (InputStream inputStream = Player.class.getResourceAsStream(Constants.SPRITE_ATLAS.PLAYER_SHIP)) {
             assert inputStream != null;
@@ -25,7 +27,7 @@ public class Player extends Entity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        hitbox = new Rectangle(x, y, playerImage.getWidth(), playerImage.getHeight());
+        hitbox = new Rectangle2D.Float(x, y, playerImage.getWidth(), playerImage.getHeight());
     }
 
     public void update() {
@@ -34,6 +36,8 @@ public class Player extends Entity {
             if (keyboardInput.getKeyPressed(KeyEvent.VK_SPACE)) {
                 shoot();
             }
+        } else {
+            game.gameOver();
         }
     }
 
@@ -73,10 +77,10 @@ public class Player extends Entity {
 
     private void drawHitbox(Graphics graphics) {
         graphics.setColor(Color.RED);
-        graphics.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+//        graphics.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
     }
 
     private void drawPlayer(Graphics graphics) {
-        graphics.drawImage(playerImage, hitbox.x, hitbox.y, null);
+        graphics.drawImage(playerImage, (int) hitbox.x, (int) hitbox.y, null);
     }
 }

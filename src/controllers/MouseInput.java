@@ -37,16 +37,25 @@ public class MouseInput implements MouseListener, MouseMotionListener {
                     game.getPaused().getMainMenuButton().setMouseClicking(true);
                 }
             }
+            case GAME_OVER -> {
+                if (game.getGameOver().getRestartButton().isMouseInside()) {
+                    game.getGameOver().getRestartButton().setMouseClicking(true);
+                } else if (game.getGameOver().getMainMenuButton().isMouseInside()) {
+                    game.getGameOver().getMainMenuButton().setMouseClicking(true);
+                }
+            }
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-                game.getMainMenu().getPlayButton().setMouseClicking(false);
-                game.getMainMenu().getQuitButton().setMouseClicking(false);
-                game.getPaused().getRestartButton().setMouseClicking(false);
-                game.getPaused().getMainMenuButton().setMouseClicking(false);
-                game.getPaused().getResumeButton().setMouseClicking(false);
+        game.getMainMenu().getPlayButton().setMouseClicking(false);
+        game.getMainMenu().getQuitButton().setMouseClicking(false);
+        game.getPaused().getRestartButton().setMouseClicking(false);
+        game.getPaused().getMainMenuButton().setMouseClicking(false);
+        game.getPaused().getResumeButton().setMouseClicking(false);
+        game.getGameOver().getRestartButton().setMouseClicking(false);
+        game.getGameOver().getMainMenuButton().setMouseClicking(false);
     }
 
     @Override
@@ -88,6 +97,16 @@ public class MouseInput implements MouseListener, MouseMotionListener {
                     game.getPaused().getResumeButton().setMouseInside(false);
                     game.getPaused().getRestartButton().setMouseInside(false);
                     game.getPaused().getMainMenuButton().setMouseInside(false);
+                }
+            }
+            case GAME_OVER -> {
+                if (game.getGameOver().getRestartButton().getHitbox().contains(e.getX(), e.getY())) {
+                    game.getGameOver().getRestartButton().setMouseInside(true);
+                } else if (game.getGameOver().getMainMenuButton().getHitbox().contains(e.getX(), e.getY())) {
+                    game.getGameOver().getMainMenuButton().setMouseInside(true);
+                } else {
+                    game.getGameOver().getRestartButton().setMouseInside(false);
+                    game.getGameOver().getMainMenuButton().setMouseInside(false);
                 }
             }
         }

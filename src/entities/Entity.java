@@ -2,18 +2,20 @@ package entities;
 
 import controllers.KeyboardInput;
 import main.Game;
+import static utilz.Constants.ENTITIES;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Entity {
-    protected int x;
-    protected int y;
+    protected float x;
+    protected float y;
     protected KeyboardInput keyboardInput;
-    protected Rectangle hitbox;
+    protected Rectangle2D.Float hitbox;
     protected Ship ship;
     protected boolean isAlive = true;
-    protected int speed = 5;
+    protected float speed;
     protected Game game;
     protected boolean reloading = false;
     protected long actionTime = 0L;
@@ -23,7 +25,7 @@ public class Entity {
         return isAlive;
     }
 
-    public Entity(int x, int y, Game game, KeyboardInput keyboardInput) {
+    public Entity(float x, float y, Game game, KeyboardInput keyboardInput) {
         this.x = x;
         this.y = y;
         this.game = game;
@@ -43,7 +45,7 @@ public class Entity {
         }
     }
 
-    public Rectangle getHitbox() {
+    public Rectangle2D.Float getHitbox() {
         return hitbox;
     }
 

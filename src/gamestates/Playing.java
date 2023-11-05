@@ -20,7 +20,7 @@ public class Playing {
     private ArrayList<Alien> aliens = new ArrayList<>();
     private ArrayList<Missile> missiles = new ArrayList<>();
     private KeyboardInput keyboardInput;
-    private long timeToRespawnAliens = 1500;    // 3 seconds
+    private long timeToRespawnAliens = 2000;    // 3 seconds
     private long respawnCounter = 0L;
     private boolean canCreateAlien = true;
     private long currentRespawnTime = System.currentTimeMillis();
