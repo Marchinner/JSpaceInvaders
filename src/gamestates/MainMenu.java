@@ -65,12 +65,12 @@ public class MainMenu {
         return quitButton;
     }
 
-    private void drawButtons(Graphics graphics) {
+    private void drawButtons(Graphics graphics) throws IOException, FontFormatException {
         playButton.draw(graphics);
         quitButton.draw(graphics);
     }
 
-    public void draw(Graphics graphics) {
+    public void draw(Graphics graphics) throws IOException, FontFormatException {
         graphics.drawImage(backgroundImage, 0, 0, null);
         // Set background color
 //        graphics.setColor(Color.BLACK);

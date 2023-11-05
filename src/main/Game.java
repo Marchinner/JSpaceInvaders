@@ -8,6 +8,7 @@ import gamestates.Playing;
 import gamestates.States;
 
 import java.awt.*;
+import java.io.IOException;
 
 import static utilz.Constants.GAME_ENGINE;
 
@@ -120,7 +121,7 @@ public class Game implements Runnable {
         return deltaTime;
     }
 
-    public void render(Graphics graphics) {
+    public void render(Graphics graphics) throws IOException, FontFormatException {
         switch (gameState) {
             case MENU -> mainMenu.draw(graphics);
             case PLAYING -> playing.draw(graphics);

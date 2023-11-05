@@ -4,6 +4,7 @@ import static utilz.Constants.GAME_WINDOW;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class GamePanel extends JPanel {
 
@@ -19,6 +20,12 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-        game.render(graphics);
+        try {
+            game.render(graphics);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

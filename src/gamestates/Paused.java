@@ -6,6 +6,7 @@ import main.Game;
 import utilz.Constants.GAME_WINDOW;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class Paused {
 
@@ -70,12 +71,12 @@ public class Paused {
         return mainMenuButton;
     }
 
-    public void draw(Graphics graphics) {
+    public void draw(Graphics graphics) throws IOException, FontFormatException {
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0, 0, GAME_WINDOW.WIDTH, GAME_WINDOW.HEIGHT);
         GText.drawText(
                 GAME_WINDOW.HORIZONTAL_CENTERED,
-                50,
+                100,
                 "JOGO PAUSADO",
                 50,
                 Color.RED,
