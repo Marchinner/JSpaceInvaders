@@ -1,5 +1,5 @@
 
-[//]: # (![Logo]&#40;https://github.com/Marchinner/JPong/blob/master/res/icon.png?raw=true&#41;)
+![Logo](https://github.com/Marchinner/JSpaceInvaders/blob/main/res/screenshots/print_logo.png?raw=true)
 
 # JSpace Invaders 
 
@@ -9,13 +9,13 @@ TODO
 
 ## Screenshots
 
-[//]: # (![App Screenshot]&#40;https://github.com/Marchinner/JPong/blob/master/res/mainMenuPrintEnUS.png?raw=true&#41;)
+![App Screenshot](https://github.com/Marchinner/JSpaceInvaders/blob/main/res/screenshots/print_mainMenu.png?raw=true)
 
-[//]: # (![App Screenshot]&#40;https://github.com/Marchinner/JPong/blob/master/res/inGamePrintEnUS.png?raw=true&#41;)
+![App Screenshot](https://github.com/Marchinner/JSpaceInvaders/blob/main/res/screenshots/print_playing.png?raw=true)
 
-[//]: # (![App Screenshot]&#40;https://github.com/Marchinner/JPong/blob/master/res/pausedPrintEnUS.png?raw=true&#41;)
+![App Screenshot](https://github.com/Marchinner/JSpaceInvaders/blob/main/res/screenshots/print_paused.png?raw=true)
 
-[//]: # (![App Screenshot]&#40;https://github.com/Marchinner/JPong/blob/master/res/gameOverPrintEnUS.png?raw=true&#41;)
+![App Screenshot](https://github.com/Marchinner/JSpaceInvaders/blob/main/res/screenshots/print_gameOver.png?raw=true)
 
 
 ## Functionalities
