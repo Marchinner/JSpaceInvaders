@@ -20,7 +20,7 @@ public class GText {
      * @param graphics the graphics used to draw the text
      */
     public static void drawText(int x, int y, String text, int fontSize, Color textColor, Graphics graphics) throws IOException, FontFormatException {
-        Font font = Font.createFont(Font.TRUETYPE_FONT, new File(String.valueOf(fontPath))).deriveFont(82f);
+        Font font = Font.createFont(Font.TRUETYPE_FONT, new File(String.valueOf(fontPath))).deriveFont((float) fontSize);
         FontMetrics fontMetrics = graphics.getFontMetrics(font);
         int textWidth = fontMetrics.stringWidth(text);
         graphics.setColor(textColor);

@@ -18,6 +18,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import static gui.GText.drawText;
+
 public class Playing {
 
     private Game game;
@@ -29,7 +31,7 @@ public class Playing {
     private long respawnCounter = 0L;
     private boolean canCreateAlien = true;
     private long currentRespawnTime = System.currentTimeMillis();
-    private BufferedImage explosion = null;
+    private int playerScore = 0;
 
     private int deathAliens = 0;
 
@@ -44,6 +46,7 @@ public class Playing {
     }
 
     public void initializeClasses() {
+        playerScore = 0;
         player = new Player(GAME_WINDOW.HORIZONTAL_CENTERED, 550, game, keyboardInput);
 
         if (!aliens.isEmpty()) {
@@ -68,6 +71,7 @@ public class Playing {
             alien.checkIfWasHit(missiles);
             if (!alien.isAlive()) {
                 deathAliens++;
+                playerScore++;
             }
         }
 
@@ -97,7 +101,7 @@ public class Playing {
         missiles.removeIf(Missile::hasHitTarget);
     }
 
-    public void draw(Graphics graphics) {
+    public void draw(Graphics graphics) throws IOException, FontFormatException {
         drawBackground(graphics);
         player.draw(graphics);
 
@@ -110,6 +114,8 @@ public class Playing {
                 missile.draw(graphics);
             }
         }
+
+        drawText(40, 590, "Score: " + playerScore, 22, Color.WHITE, graphics);
     }
 
     private void drawBackground(Graphics graphics) {

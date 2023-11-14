@@ -1,11 +1,19 @@
 
 ![Logo](https://github.com/Marchinner/JSpaceInvaders/blob/main/res/screenshots/print_logo.png?raw=true)
 
-# JSpace Invaders 
+# Welcome to the Repository of My Second Clone of a Classic Game in Java! 
 
 [//]: # ([Clique aqui para ler em Português]&#40;https://github.com/Marchinner/JPong/blob/master/res/README-ptbr.md&#41;)
 
-TODO
+Witness my learning journey as I dive into the thrilling realm of game development in Java! This repository houses my second clone of a classic game, a creation born from scratch, fueled by my curiosity and a thirst for challenges.
+
+Throughout this journey, I decided to take on the challenge of developing a fully functional game using only the official Java documentation as my guide. I explored every corner of Object-Oriented Programming and honed my programming logic skills, turning every obstacle into a learning opportunity.
+
+Within this repository, you'll find the fruit of my effort and dedication, reflected in the game's source code. Every line is a tangible representation of my commitment to understanding fundamental concepts and applying them in a practical manner.
+
+Join me on this journey of continuous learning, where each challenge overcome is a victory, and each line of code is a lesson learned. Feel free to explore, contribute, and perhaps find inspiration for your own projects.
+
+Let's code together, explore together, and celebrate the power of learning through practice! 🚀🎮
 
 ## Screenshots
 
@@ -20,11 +28,15 @@ TODO
 
 ## Functionalities
 
-TODO
+- Move yourself with "A" and "D"
+- Shoot missiles with SPACE BAR
+- Destroy the enemies spacecrafts
 
 ## Roadmap
 
-TODO
+- [ ] Increasing difficulty
+- [ ] Collectible items (ammo, shield, and others)
+- [ ] Boss?
 
 ## Install
 
