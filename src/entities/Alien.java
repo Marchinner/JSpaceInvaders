@@ -31,7 +31,7 @@ public class Alien extends Entity {
         hitbox = new Rectangle2D.Float(x, y, alienImage.getWidth(), alienImage.getHeight());
     }
 
-    public void update() {
+    public void update() throws IOException {
         if (isAlive) {
             updatePosition();
             if (isOnLineOfAttack(game.getPlaying().getPlayer()))

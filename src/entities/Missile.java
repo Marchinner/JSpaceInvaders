@@ -1,9 +1,17 @@
 package entities;
 
+import utilz.Constants;
+
+import javax.imageio.ImageIO;
+
 import static utilz.Constants.ENTITIES.MISSILE_SPEED;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Struct;
 
 public class Missile {
     private float x;
@@ -12,8 +20,12 @@ public class Missile {
     private float speed = MISSILE_SPEED;
     private Rectangle2D.Float hitbox;
     private boolean hitTarget = false;
+    private long explosionTime = 0L;
+    private long explosionDurationTime = 2000;
+    private boolean exploded;
+    private BufferedImage explosionImage = null;
 
-    public Missile(Entity shooter) {
+    public Missile(Entity shooter) throws IOException {
         this.shooter = shooter;
         x = shooter.hitbox.x + shooter.hitbox.width / 2;
 
@@ -23,6 +35,13 @@ public class Missile {
         }
 
         hitbox = new Rectangle2D.Float(x, y, 2f, 8f);
+
+        try (InputStream inputStream = Missile.class.getResourceAsStream(Constants.SPRITE_ATLAS.EXPLOSION)) {
+            assert inputStream != null;
+            explosionImage = ImageIO.read(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void update() {
@@ -45,9 +64,17 @@ public class Missile {
     }
 
     public void draw(Graphics graphics) {
-            graphics.setColor(Color.RED);
-            graphics.fillRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+        graphics.setColor(Color.RED);
+        graphics.fillRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+        if (exploded) {
+            drawExplosion(graphics);
+        }
 //            drawHitbox(graphics);
+    }
+
+    private void drawExplosion(Graphics graphics) {
+        graphics.drawImage(explosionImage, (int) hitbox.x - explosionImage.getWidth() / 2, (int) hitbox.y - explosionImage.getHeight() / 2, explosionImage.getWidth(), explosionImage.getHeight(), null);
+        hitTarget = true;
     }
 
     private void drawHitbox(Graphics graphics) {
@@ -60,6 +87,8 @@ public class Missile {
     }
 
     public void setHitTarget(boolean hitTarget) {
-        this.hitTarget = hitTarget;
+        if (hitTarget) {
+            exploded = true;
+        }
     }
 }

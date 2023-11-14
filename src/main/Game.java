@@ -38,7 +38,7 @@ public class Game implements Runnable {
         startGameThread();
     }
 
-    private void update() {
+    private void update() throws IOException {
         switch (gameState) {
             case MENU -> mainMenu.update();
             case PLAYING -> playing.update();
@@ -162,7 +162,11 @@ public class Game implements Runnable {
             deltaTime = deltaF;
 
             if (deltaU >= 1) {
-                update();
+                try {
+                    update();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 updates++;
                 deltaU--;
             }
