@@ -6,6 +6,7 @@ import static utilz.Constants.ENTITIES;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Entity {
@@ -32,7 +33,7 @@ public class Entity {
         this.keyboardInput = keyboardInput;
     }
 
-    protected void shoot() {
+    protected void shoot() throws IOException {
         long currentActionTime = System.currentTimeMillis();
         if (currentActionTime - actionTime >= reloadingCooldownTime) {
             actionTime = currentActionTime;

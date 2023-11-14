@@ -5,11 +5,16 @@ import entities.Alien;
 import entities.Missile;
 import entities.Player;
 import main.Game;
+import utilz.Constants;
 import utilz.Constants.GAME_WINDOW;
 import utilz.Constants.GAME;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -24,6 +29,7 @@ public class Playing {
     private long respawnCounter = 0L;
     private boolean canCreateAlien = true;
     private long currentRespawnTime = System.currentTimeMillis();
+    private BufferedImage explosion = null;
 
     private int deathAliens = 0;
 
@@ -46,13 +52,15 @@ public class Playing {
         if (!missiles.isEmpty()) {
             missiles.clear();
         }
+
+
     }
 
     private void createAlien() {
-        aliens.add(new Alien((int) (Math.random() * GAME_WINDOW.WIDTH), -40, keyboardInput, game));
+        aliens.add(new Alien((int) (Math.random() * GAME_WINDOW.WIDTH - 20), -40, keyboardInput, game));
     }
 
-    public void update() {
+    public void update() throws IOException {
         player.update();
         player.checkIfWasHit(missiles);
         for (Alien alien : aliens) {
@@ -85,7 +93,7 @@ public class Playing {
             canCreateAlien = true;
         }
 
-        aliens.removeIf(alien -> alien.getHitbox().y >= GAME_WINDOW.HEIGHT);
+        aliens.removeIf(alien -> alien.getHitbox().y >= GAME_WINDOW.HEIGHT || !alien.isAlive());
         missiles.removeIf(Missile::hasHitTarget);
     }
 

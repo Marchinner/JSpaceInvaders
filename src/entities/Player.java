@@ -30,7 +30,7 @@ public class Player extends Entity {
         hitbox = new Rectangle2D.Float(x, y, playerImage.getWidth(), playerImage.getHeight());
     }
 
-    public void update() {
+    public void update() throws IOException {
         if (isAlive) {
             updatePosition();
             if (keyboardInput.getKeyPressed(KeyEvent.VK_SPACE)) {

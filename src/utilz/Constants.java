@@ -25,6 +25,7 @@ public class Constants {
         public static final String BACKGROND_MENU = "/background_menu.png";
         public static final String PLAYER_SHIP = "/player_ship.png";
         public static final String ALIEN_SHIP = "/alien_ship.png";
+        public static final String EXPLOSION = "/explosion.png";
     }
 
     public static final class ENTITIES {
