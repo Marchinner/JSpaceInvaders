@@ -3,7 +3,7 @@
 
 # Welcome to the Repository of My Second Clone of a Classic Game in Java! 
 
-[Clique aqui para ler em Português](https://github.com/Marchinner/JPong/blob/master/res/README-ptbr.md)
+[Clique aqui para ler em Português](https://github.com/Marchinner/JSpaceInvaders/blob/master/res/README-ptbr.md)
 
 Witness my learning journey as I dive into the thrilling realm of game development in Java! This repository houses my second clone of a classic game, a creation born from scratch, fueled by my curiosity and a thirst for challenges.
 
