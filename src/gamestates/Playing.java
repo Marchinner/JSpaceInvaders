@@ -2,21 +2,17 @@ package gamestates;
 
 import controllers.KeyboardInput;
 import entities.Alien;
+import entities.AmmoBox;
 import entities.Missile;
 import entities.Player;
 import main.Game;
-import utilz.Constants;
 import utilz.Constants.GAME_WINDOW;
 import utilz.Constants.GAME;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import static gui.GText.drawText;
 
@@ -26,12 +22,14 @@ public class Playing {
     private Player player;
     private ArrayList<Alien> aliens = new ArrayList<>();
     private ArrayList<Missile> missiles = new ArrayList<>();
+    private ArrayList<AmmoBox> ammoBoxes = new ArrayList<>();
     private KeyboardInput keyboardInput;
     private long timeToRespawnAliens = 2000;    // 3 seconds
     private long respawnCounter = 0L;
     private boolean canCreateAlien = true;
     private long currentRespawnTime = System.currentTimeMillis();
     private int playerScore = 0;
+    private int ammoBoxCount = 0;
 
     private int deathAliens = 0;
 
@@ -47,6 +45,7 @@ public class Playing {
 
     public void initializeClasses() {
         playerScore = 0;
+        ammoBoxCount = 0;
         player = new Player(GAME_WINDOW.HORIZONTAL_CENTERED, 550, game, keyboardInput);
 
         if (!aliens.isEmpty()) {
@@ -55,12 +54,24 @@ public class Playing {
         if (!missiles.isEmpty()) {
             missiles.clear();
         }
+        if (!ammoBoxes.isEmpty()) {
+            ammoBoxes.clear();
+        }
 
 
     }
 
     private void createAlien() {
         aliens.add(new Alien((int) (Math.random() * GAME_WINDOW.WIDTH - 20), -40, keyboardInput, game));
+        if (playerScore % 5 == 0) {
+            createAmmoBox();
+            System.out.println("AMMO BOX CREATED");
+            ammoBoxCount++;
+        }
+    }
+
+    private void createAmmoBox() {
+        ammoBoxes.add(new AmmoBox((int) (Math.random() * GAME_WINDOW.WIDTH - 10), -20));
     }
 
     public void update() throws IOException {
@@ -72,6 +83,7 @@ public class Playing {
             if (!alien.isAlive()) {
                 deathAliens++;
                 playerScore++;
+                ammoBoxCount--;
             }
         }
 
@@ -83,6 +95,12 @@ public class Playing {
         if (!missiles.isEmpty()) {
             for (Missile missile : missiles) {
                 missile.update();
+            }
+        }
+
+        if (!ammoBoxes.isEmpty()) {
+            for (AmmoBox ammoBox : ammoBoxes) {
+                ammoBox.update();
             }
         }
 
@@ -107,6 +125,12 @@ public class Playing {
 
         for (Alien alien : aliens) {
             alien.draw(graphics);
+        }
+
+        if (!ammoBoxes.isEmpty()) {
+            for (AmmoBox ammoBox : ammoBoxes) {
+                ammoBox.draw(graphics);
+            }
         }
 
         if (!missiles.isEmpty()) {
